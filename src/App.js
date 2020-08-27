@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.css";
+import HomePage from "./components/HomePage";
+import AboutYou from "./components/AboutYou";
+import { NameContext } from "./context/NameContext";
+import StartPage from "./components/StartPage";
 
 function App() {
+  let [firstName, setFirstName] = useState();
+  let [lastName, setLastName] = useState();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <Switch>
+        <NameContext.Provider
+          value={{ firstName, setFirstName, lastName, setLastName }}
         >
-          Learn React
-        </a>
-      </header>
+          <Route path="/">
+            <StartPage />
+          </Route>
+          <Route path="/home">
+            <HomePage />
+          </Route>
+          <Route path="/about-you">
+            <AboutYou />
+          </Route>
+        </NameContext.Provider>
+      </Switch>
     </div>
   );
 }
